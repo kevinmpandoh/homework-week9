@@ -6,6 +6,7 @@ var swaggerJsdoc = require('swagger-jsdoc');
 var swaggerUi = require('swagger-ui-express');
 
 const options = {
+    failOnErrors: true,
     definition: {
         openapi: '3.0.0',
         info: {
@@ -19,10 +20,11 @@ const options = {
             },
         ],
     },
-    apis: ['./routes/*.js'],
+    apis: ['./src/routes/movies.js'],
 }
 
 const specs = swaggerJsdoc(options);
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
 
 app.use(morgan('common'));

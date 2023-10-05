@@ -1,57 +1,32 @@
 /**
- * @swagger
+ * @openapi
  * components:
- *  schemas:
- *    Movie:
- *     type: object
- *     required:
- *      - title
- *      - genres
- *      - year
- *    properties:
- *      id:
- *        type: integer
- *        description: The auto-generated id of the book
- *      title:
- *        type: string
- *        description: The title of your movies
- *      genres:
- *        type: string
- *        description: the movie genres
- *      year:
- *        type: string
- *        description: the movie year
- *    example:
- *      id: 12
- *      title: Naruto
- *      genres: Cartoon
- *      year: 2000
+ *    schemas:
+ *      Book:
+ *        type: object
+ *        required:
+ *          - id
+ *          - title
+ *          - genres
+ *          - year
  */
 
 /**
- * @swagger
+ * @openapi
  * tags:
  *    name: Movies
- *    description: The Movies managing API
+ *    description: Managing API Movie
  * /movies:
- *    post:
- *      summary: Create a new movie
- *      tags: [Movies]
- *      requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Movie'
- *       responses:
- *        200:
- *          description: The created movie.
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/Movie'
- *        500:
- *          description: Some server error
+ *   get:
+ *     summary: Get all movies
+ *     tags: [Movies]
+ *     responses:
+ *       200:
+ *         description: Get all Movies.
+ *         content: 
+ *           aplication/json
+ *       500:
+ *        description: Some server error
  */
 
 var express = require('express');
