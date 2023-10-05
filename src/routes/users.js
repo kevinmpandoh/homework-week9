@@ -23,7 +23,7 @@ router.post('/login', (req, res) => {
   );
 });
 
-router.post("/verify/:token", (req, res) => {
+router.get("/verify/:token", (req, res) => {
   const data = verifyToken(req.params.token)
 
   res.json({
