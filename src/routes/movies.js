@@ -2,7 +2,7 @@
  * @swagger
  * components:
  *  schemas:
- *  Movie:
+ *    Movie:
  *     type: object
  *     required:
  *      - title
@@ -33,7 +33,7 @@
  * tags:
  *    name: Movies
  *    description: The Movies managing API
- * /books:
+ * /movies:
  *    post:
  *      summary: Create a new movie
  *      tags: [Movies]
@@ -54,14 +54,9 @@
  *          description: Some server error
  */
 
-
-
-
 var express = require('express');
 var router = express.Router();
-
 var pool = require('../query.js');
-
 var auth = require('../middleware/authMiddleware.js');
 
 router.get('/', auth, (req, res) => {

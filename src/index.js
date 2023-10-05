@@ -19,7 +19,7 @@ const options = {
             },
         ],
     },
-    apis: ['./routes/*'],
+    apis: ['./routes/*.js'],
 }
 
 const specs = swaggerJsdoc(options);
@@ -35,7 +35,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //Require the Router we defined in movies.js
 var movies = require('./routes/movies.js');
 var users = require('./routes/users.js');
-const swaggerJSDoc = require('swagger-jsdoc');
 
 //Use the Router on the sub route /movies
 app.use('/movies', movies);
