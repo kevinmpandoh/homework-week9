@@ -5,7 +5,7 @@ var pool = require('../query.js');
 
 var auth = require('../middleware/authMiddleware.js');
 
-router.get('/', auth, (req, res) => {
+router.get('/', (req, res) => {
   pool.query(
     `SELECT * FROM movies ${
       req.query.limit ? 'LIMIT ' + req.query.limit : ''
@@ -18,6 +18,8 @@ router.get('/', auth, (req, res) => {
     }
   );
 });
+
+
 
 router.get('/:id', (req, res) => {
   pool.query(
