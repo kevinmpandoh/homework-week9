@@ -1,3 +1,62 @@
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *  Movie:
+ *     type: object
+ *     required:
+ *      - title
+ *      - genres
+ *      - year
+ *    properties:
+ *      id:
+ *        type: integer
+ *        description: The auto-generated id of the book
+ *      title:
+ *        type: string
+ *        description: The title of your movies
+ *      genres:
+ *        type: string
+ *        description: the movie genres
+ *      year:
+ *        type: string
+ *        description: the movie year
+ *    example:
+ *      id: 12
+ *      title: Naruto
+ *      genres: Cartoon
+ *      year: 2000
+ */
+
+/**
+ * @swagger
+ * tags:
+ *    name: Movies
+ *    description: The Movies managing API
+ * /books:
+ *    post:
+ *      summary: Create a new movie
+ *      tags: [Movies]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movie'
+ *       responses:
+ *        200:
+ *          description: The created movie.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Movie'
+ *        500:
+ *          description: Some server error
+ */
+
+
+
+
 var express = require('express');
 var router = express.Router();
 
@@ -5,7 +64,7 @@ var pool = require('../query.js');
 
 var auth = require('../middleware/authMiddleware.js');
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
   pool.query(
     `SELECT * FROM movies ${
       req.query.limit ? 'LIMIT ' + req.query.limit : ''
