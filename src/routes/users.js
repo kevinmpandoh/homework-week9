@@ -21,6 +21,21 @@ router.post('/login', (req, res) => {
   );
 });
 
+router.post('/register', (req, res) => {
+  pool.query(
+    `INSERT INTO users(email, gender, password) VALUES($1, $2, $3)`,
+    [req.body.email, req.body.gender, req.body.password],
+    (error, results) => {
+      if (error) {
+        throw error;
+      } 
+      res.status(201).json({
+        status: 'success',
+      });
+    }
+  );
+});
+
 router.get('/', (req, res) => {
   pool.query(
     `SELECT * FROM users ${
