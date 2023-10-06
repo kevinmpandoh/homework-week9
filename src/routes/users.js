@@ -6,10 +6,14 @@ var pool = require('../query.js');
 
 router.post('/login', (req, res) => {
 
+  // res.send("OK")
+
   pool.query(
     `SELECT * FROM users WHERE email = $1 AND password = $2`,
     [req.body.email, req.body.password],
     (error, results) => {
+
+      // res.json(results.rows[0])
 
       if (error) {
         throw error;

@@ -2,20 +2,39 @@
  * @openapi
  * components:
  *    schemas:
- *      Book:
+ *      Movie:
  *        type: object
  *        required:
  *          - id
  *          - title
- *          - genres
+ *          - genre
  *          - year
+ *        properties:
+ *          id:
+ *            type: integer
+ *            description: The auto generated id of the movie
+ *          title:
+ *            type: string
+ *            description: The title of your movie
+ *          genre:
+ *            type: string
+ *            description: The genre of your movie
+ *          year:
+ *            type: string
+ *            description: The year of your movie
+ *        example:
+ *          id: 1
+ *          title: Naruto
+ *          genres: Action
+ *          year: 2001
+ *          
  */
 
 /**
  * @openapi
  * tags:
  *    name: Movies
- *    description: Managing API Movie
+ *    description: The movie managing API
  * /movies:
  *   get:
  *     summary: Get all movies
@@ -24,9 +43,94 @@
  *       200:
  *         description: Get all Movies.
  *         content: 
- *           aplication/json
+ *           application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movie'
  *       500:
  *        description: Some server error
+ *   post:
+ *     summary: Create a new movie
+ *     tags: [Movies]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Movie'
+ *     responses:
+ *       200:
+ *         description: The created book.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Movie'
+ *       500:
+ *         description: some server error
+ * 
+ * /movies/{id}:
+ *    get:
+ *     summary: Get the book by id
+ *     tags: [Movies]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: the movie id
+ *     responses:
+ *       200:
+ *         description: The book response by id.
+ *         content: 
+ *           application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Movie'
+ *       400:
+ *        description: The movie was not found
+ * movies/{id}:
+ *   put:
+ *     summary: update the movie by the id
+ *     tags: [Movies]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The movie id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Movie'
+ *     responses:
+ *       200:
+ *         description: The book was updated
+ *         content:
+ *           aplication/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Movie'
+ *       400:
+ *         description: The book was not found
+ *       500:
+ *         description: Some error happened
+ *   delete:
+ *     summary: Remove the book by id
+ *     tags: [Movies]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The book id
+ * 
+ *     responses:
+ *       200:
+ *         description: The movie was deleted
+ *       404:
+ *         description: The movie was not found
  */
 
 var express = require('express');
@@ -50,7 +154,7 @@ router.get('/', auth, (req, res) => {
 
 
 
-router.get('/:id', (req, res) => {
+router.get('/:id', auth, (req, res) => {
   pool.query(
     `SELECT * FROM movies WHERE id = ${req.params.id}`,
     (error, results) => {
@@ -62,7 +166,7 @@ router.get('/:id', (req, res) => {
   );
 });
 
-router.post('/', (req, res) => {
+router.post('/', auth, (req, res) => {
   //   console.log(req.body);
   pool.query(
     `INSERT INTO movies ("title", "genres", "year") VALUES ($1, $2, $3);`,
@@ -78,7 +182,7 @@ router.post('/', (req, res) => {
   );
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', auth, (req, res) => {
   //   console.log(req.body);
   pool.query(
     `DELETE FROM movies WHERE id = ${req.params.id}`,
@@ -93,7 +197,7 @@ router.delete('/:id', (req, res) => {
   );
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id',auth,(req, res) => {
   //   console.log(req.body);
   pool.query(
     `UPDATE movies SET year = "${req.body.year}" WHERE id = ${req.params.id}`,
