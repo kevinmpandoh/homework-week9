@@ -1,7 +1,7 @@
 const { verifyToken } = require('../utils/auth');
 
 const authMiddleware = (req, res, next) => {
-  // console.log(data);
+
   const beareHeader = req.headers['authorization'];
 
   const token = beareHeader.split(' ')[1];

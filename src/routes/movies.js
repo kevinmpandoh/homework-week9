@@ -145,7 +145,9 @@ router.get('/', auth, (req, res) => {
     } `,
     (error, results) => {
       if (error) {
-        throw error;
+        res.status(403).json({
+          "message": "Tidak bisa di akses"
+        })
       }
       res.json(results.rows);
     }
@@ -169,8 +171,8 @@ router.get('/:id', auth, (req, res) => {
 router.post('/', auth, (req, res) => {
   //   console.log(req.body);
   pool.query(
-    `INSERT INTO movies ("title", "genres", "year") VALUES ($1, $2, $3);`,
-    [req.body.title, req.body.genres, req.body.year],
+    `INSERT INTO movies ("id", "title", "genres", "year") VALUES ($1, $2, $3, $4);`,
+    [req.body.id, req.body.title, req.body.genres, req.body.year],
     (error, results) => {
       if (error) {
         throw error;
@@ -180,12 +182,13 @@ router.post('/', auth, (req, res) => {
       });
     }
   );
-});
+}); 
 
 router.delete('/:id', auth, (req, res) => {
   //   console.log(req.body);
   pool.query(
-    `DELETE FROM movies WHERE id = ${req.params.id}`,
+    `DELETE FROM movies WHERE id = $1`,
+    [req.params.id],
     (error, results) => {
       if (error) {
         throw error;
@@ -198,9 +201,10 @@ router.delete('/:id', auth, (req, res) => {
 });
 
 router.put('/:id',auth,(req, res) => {
-  //   console.log(req.body);
+
   pool.query(
-    `UPDATE movies SET year = "${req.body.year}" WHERE id = ${req.params.id}`,
+    `UPDATE movies SET year = $1 WHERE id = $2`,
+    [req.body.year, req.params.id],
     (error, results) => {
       if (error) {
         throw error;
@@ -210,7 +214,7 @@ router.put('/:id',auth,(req, res) => {
       });
     }
   );
-});
+}); 
 
 //export this router to use in our index.js
 module.exports = router;
