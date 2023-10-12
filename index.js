@@ -4,6 +4,10 @@ var morgan = require('morgan');
 var app = express();
 var swaggerJsdoc = require('swagger-jsdoc');
 var swaggerUi = require('swagger-ui-express');
+require('dotenv').config();
+
+const movieRouter = require('./src/routes/movie.routes')
+const userRouter = require('./src/routes/user.routes')
 
 const options = {
     failOnErrors: true,
@@ -24,22 +28,22 @@ const options = {
 }
 
 const specs = swaggerJsdoc(options);
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
-
-app.use(morgan('common'));
-
-require('dotenv').config();
-
+app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//Require the Router we defined in movies.js
-var movies = require('./routes/movies.js');
-var users = require('./routes/users.js');
+var movies = require('./src/routes/movies.js');
+var users = require('./src/routes/users.js');
 
-//Use the Router on the sub route /movies
-app.use('/movies', movies);
+// app.use('/movies', movies);
 app.use('/users', users);
+app.use(movieRouter)
+app.use(userRouter)
+app.use(express.json);
 
-app.listen(3000);
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+    console.log(`Server is runing in port ${PORT}`)
+})

@@ -135,7 +135,7 @@
 
 var express = require('express');
 var router = express.Router();
-var pool = require('../query.js');
+var pool = require('../config/query.js');
 var auth = require('../middleware/authMiddleware.js');
 
 router.get('/', auth, (req, res) => {

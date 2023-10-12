@@ -7,7 +7,7 @@ const authMiddleware = (req, res, next) => {
   const token = beareHeader.split(' ')[1];
   const data = verifyToken(token);
 
-  if (data.role === 'Construction Worker') {
+  if (data.role === 'Admin') {
     next();
   } else {
     res.status(401).json({ message: 'Unauthorized' });

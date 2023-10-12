@@ -110,7 +110,7 @@ var express = require('express');
 var router = express.Router();
 var { signToken, verifyToken } = require('../utils/auth.js');
 
-var pool = require('../query.js');
+var pool = require('../config/query.js');
 
 router.post('/login', (req, res) => {
 

@@ -2,12 +2,12 @@ const jwt = require('jsonwebtoken');
 
 const signToken = (data) => {
 
-  const token = jwt.sign(data, "sangatrahasia", { expiresIn: '1h' });
+  const token = jwt.sign(data, process.env.JWT_KEY, { expiresIn: '1h' });
   return token;
 };
 
 const verifyToken = (token) => {
-  const data = jwt.verify(token, "sangatrahasia");
+  const data = jwt.verify(token, process.env.JWT_KEY);
   return data;
 };
 
