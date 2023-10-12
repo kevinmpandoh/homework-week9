@@ -34,8 +34,8 @@ app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var movies = require('./src/routes/movies.js');
-var users = require('./src/routes/users.js');
+// var movies = require('./src/routes/movies.js');
+// var users = require('./src/routes/users.js');
 
 // app.use('/movies', movies);
 app.use('/users', users);
