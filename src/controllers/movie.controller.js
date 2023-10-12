@@ -2,8 +2,16 @@ const models = require('../models');
 const Movie = models.Movies;
 
 const getAllMovies = async (req, res) => {
-    try {
-        const movies = await Movie.findAll();
+    try {        
+        const size = parseInt(req.query.size);
+        const page = parseInt(req.query.page);
+        const limit = size ? size : null;
+        const offset = limit ? (page - 1) * limit : null
+
+        const movies = await Movie.findAll({
+            limit,
+            offset
+        });
         if(!movies[0]) return res.status(404).json({
             status: "404",
             message: "Data belum ada",
