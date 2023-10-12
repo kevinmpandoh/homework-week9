@@ -1,40 +1,19 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-var app = express();
-var swaggerJsdoc = require('swagger-jsdoc');
-var swaggerUi = require('swagger-ui-express');
-require('dotenv').config();
-
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const specs = require('./swagger')
+const swaggerUi = require('swagger-ui-express');
+const morgan = require('morgan');
 const movieRouter = require('./src/routes/movie.routes')
 const userRouter = require('./src/routes/user.routes')
+require('dotenv').config();
 
-const options = {
-    failOnErrors: true,
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'Express API with Swagger',
-            version: '1.0.0',
-            description: "This is a simple CRUD API aplication made with Express and documented with Swagger",
-        },
-        servers: [
-            {
-                url: 'http://localhost:3000',
-            },
-        ],
-    },
-    apis: ['./src/routes/*.js'],
-}
-
-const specs = swaggerJsdoc(options);
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
 app.use(morgan('tiny'));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(movieRouter)
+app.use(movieRouter) 
 app.use(userRouter)
 app.use(express.json);
 

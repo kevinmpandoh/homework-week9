@@ -5,7 +5,6 @@
  *      Movie:
  *        type: object
  *        required:
- *          - id
  *          - title
  *          - genre
  *          - year
@@ -22,11 +21,17 @@
  *          year:
  *            type: string
  *            description: The year of your movie
+ *          createdAt:
+ *            type: date
+ *          updatedAt:
+ *            type: date
  *        example:
  *          id: 1
  *          title: Naruto
  *          genres: Action
  *          year: 2001
+ *          createdAt: 2023-10-12
+ *          updatedAt: 2023-10-13
  *          
  */
 
@@ -67,7 +72,7 @@
  *       500:
  *         description: some server error
  * 
- * /movies/{id}:
+ * /api/movies/{id}:
  *    get:
  *     summary: Get the book by id
  *     tags: [Movies]
@@ -87,7 +92,7 @@
  *              $ref: '#/components/schemas/Movie'
  *       400:
  *        description: The movie was not found
- * movies/{id}:
+ * api/movies/{id}:
  *   put:
  *     summary: update the movie by the id
  *     tags: [Movies]

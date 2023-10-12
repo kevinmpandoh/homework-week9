@@ -5,7 +5,6 @@
  *      User:
  *        type: object
  *        required:
- *          - id
  *          - email
  *          - gender
  *          - password
@@ -31,7 +30,7 @@
  *          email: kevinmpandoh@gmail.com
  *          gender: Male
  *          password: 123
- *          role: Construction Worker
+ *          role: Admin
  *          
  */
 
@@ -40,7 +39,7 @@
  * tags:
  *    name: Users
  *    description: The user managing API
- * /users:
+ * /api/users:
  *   get:
  *     summary: Get all users
  *     tags: [Users]
@@ -56,7 +55,7 @@
  *       500:
  *        description: Some server error
  * 
- * /users/register:
+ * /api/users/register:
  *   post:
  *     summary: Create a new user
  *     tags: [Users]
@@ -76,7 +75,7 @@
  *       500:
  *         description: some server errors
  * 
- * /users/login:
+ * /api/users/login:
  *   post:
  *     summary: Login user
  *     tags: [Users]
